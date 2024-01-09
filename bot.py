@@ -65,8 +65,8 @@ def message_handler(message):
 def check_in_queue(message):
     username = message.from_user.username
     chat_id = message.chat.id
+    bot.send_chat_action(chat_id, 'typing', 3)
     if username not in current_users:
-        bot.send_chat_action(chat_id, 'typing')
         current_users.append(username)
         bot.send_message(chat_id, "You are checked-in successfully")
     else:
@@ -76,9 +76,9 @@ def check_in_queue(message):
 def check_out_queue(message):
     username = message.from_user.username
     chat_id = message.chat.id
+    bot.send_chat_action(chat_id, 'typing', 3)
     if username in current_users:
         current_users.remove(username)
-        bot.send_chat_action(chat_id, 'typing')
         bot.send_message(chat_id, "You are checked-out successfully")
     else:
         bot.send_message(chat_id, "You are not in the queue")
