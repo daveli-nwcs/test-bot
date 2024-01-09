@@ -79,12 +79,11 @@ def check_in_queue(message, user):
     bot.send_chat_action(chat_id, 'typing', 3)
     if username not in current_users:
         current_users.append(username)
-        bot.send_message(chat_id, "You are checked-in successfully")
         print_queue(message)
     else:
-        bot.send_message(chat_id, "You are already checked-in")
+        msg = bot.send_message(chat_id, "You are already checked-in")
+        bot.register_next_step_handler(msg, start_command)
     bot.answer_callback_query(message.id)
-    bot.register_next_step_handler(message, start_command)
 
 def check_out_queue(message, user):
     username = user.username
@@ -95,7 +94,8 @@ def check_out_queue(message, user):
         bot.send_message(chat_id, "You are checked-out successfully")
         print_queue(message)
     else:
-        bot.send_message(chat_id, "You are not in the queue")
+        msg = bot.send_message(chat_id, "You are not in the queue")
+        bot.register_next_step_handler(msg, start_command)
     bot.answer_callback_query(message.id)
     bot.register_next_step_handler(message, start_command)
 
@@ -106,9 +106,9 @@ def print_queue(message):
     for index, item in enumerate(current_users):
         result += "\n" + str(index + 1) + ": " + item
     result += "\n Total: " + str(len(current_users))
-    bot.send_message(chat_id, result)
+    msg = bot.send_message(chat_id, result)
     bot.answer_callback_query(message.id)
-    bot.register_next_step_handler(message, start_command)
+    bot.register_next_step_handler(msg, start_command)
 
 
 
