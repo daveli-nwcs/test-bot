@@ -11,7 +11,7 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['info'])
 def send_info(message):
-    bot.reply_to(message, “This is a simple Telegram bot implemented in Python.”)
+    bot.reply_to(message, "This is a simple Telegram bot implemented in Python.")
 
 # Define a message handler
 @bot.message_handler(func=lambda msg: True)
