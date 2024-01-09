@@ -12,6 +12,10 @@ current_users = []
 def help_command(message):
     bot.reply_to(message, "How can i help you?")
 
+@bot.message_handler(commands=['status'])
+def status_command(message):
+    print_queue(message)
+
 @bot.message_handler(commands=['start'])
 def start_command(message):
     keyboard = telebot.types.InlineKeyboardMarkup()
@@ -84,6 +88,8 @@ def print_queue(message):
         result += "\n" + str(index + 1) + ": " + item
     result += "\n Total: " + str(len(current_users))
     bot.send_message(chat_id, result)
+    bot.reply_to(message, result)
+    bot.reply_to(message, "How can i help you?")
 
 
 # Start the bot
