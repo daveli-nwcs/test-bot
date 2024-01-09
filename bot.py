@@ -8,6 +8,20 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 current_users = []
 
+command1 = telebot.types.BotCommand(command='check-in', description='Check in to the queue')
+command2 = telebot.types.BotCommand(command='check-out', description='Check out of the queue')
+command3 = telebot.types.BotCommand(command='status', description='Check status')
+bot.set_my_commands([command1,command2,command3])
+bot.set_chat_menu_button(menu_button=types.MenuButtonCommands('commands'))
+
+# button1 = telebot.types.KeyboardButton('/check-in')
+# button2 = telebot.types.KeyboardButton('/check-out')
+# button3 = telebot.types.KeyboardButton('/status')
+# button4 = telebot.types.KeyboardButton('/help')
+
+# commands_keyboard = types.ReplyKeyboardMarkup([button1, button2, button3, button4])
+
+bot.send_message(chatid, "Hi, these are your command options:", reply_markup=commands_keyboard) #you will need to input a valid chatid here.
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
@@ -37,8 +51,13 @@ def start_command(message):
     )
     bot.send_message(message.chat.id, 'Click for your action', reply_markup=keyboard)
 
-
-
+@bot.message_handler(commands=['check-in'])
+def checkin_command(message):
+    check_in_queue(message, message.from_user)
+    
+@bot.message_handler(commands=['check-out'])
+def checkout_command(message):
+    check_out_queue(message, message.from_user)
 
 @bot.message_handler(commands=['info'])
 def info_command(message):
