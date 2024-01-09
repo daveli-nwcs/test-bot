@@ -46,8 +46,7 @@ def info_command(message):
 # Define a message handler
 @bot.callback_query_handler(func=lambda call: True)
 def callback(message):
-    data = message.data
-    bot.answer_callback_query(message.id)
+    data = message.text
     if data.startswith('check-in-'):
         check_in_queue(message)
     if data.startswith('check-out-'):
@@ -59,7 +58,7 @@ def callback(message):
 @bot.message_handler(func=lambda message: True)
 def message_handler(message):
     bot.reply_to(message, message.text)
-    
+
 def check_in_queue(message):
     username = message.from_user.username
     chat_id = message.chat.id
@@ -69,6 +68,7 @@ def check_in_queue(message):
         bot.send_message(chat_id, "You are checked-in successfully")
     else:
         bot.send_message(chat_id, "You are already checked-in")
+    bot.answer_callback_query(message.id)
 
 def check_out_queue(message):
     username = message.from_user.username
@@ -79,6 +79,7 @@ def check_out_queue(message):
         bot.send_message(chat_id, "You are checked-out successfully")
     else:
         bot.send_message(chat_id, "You are not in the queue")
+    bot.answer_callback_query(message.id)
         
 def print_queue(message):
     chat_id = message.chat.id
@@ -87,6 +88,7 @@ def print_queue(message):
         result += "\n" + str(index + 1) + ": " + item
     result += "\n Total: " + str(len(current_users))
     bot.send_message(chat_id, result)
+    bot.answer_callback_query(message.id)
 
 
 # Start the bot
