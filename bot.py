@@ -1,4 +1,5 @@
 import os
+import logging
 
 import telebot
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
@@ -45,8 +46,10 @@ def info_command(message):
 
 # Define a message handler
 @bot.callback_query_handler(func=lambda call: True)
-def callback(message):
+def callback_query(message):
     data = message.text
+    logging.info('test' data)
+    logging.info('test2' message.data)
     if data.startswith('check-in-'):
         check_in_queue(message)
     if data.startswith('check-out-'):
