@@ -38,7 +38,7 @@ def info_command(message):
 # Define a message handler
 @bot.message_handler(func=lambda msg: True)
 def callback(message):
-    data = message.data
+    data = message.text
     if data.startswith('check-in-'):
         check_in_queue(message.id , message.from_user.username)
     if data.startswith('check-out-'):
