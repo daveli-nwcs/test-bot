@@ -25,10 +25,14 @@ def start_command(message):
             'Check-out', callback_data='check-out'
         )
     )
-    
-@bot.message_handler(commands=['status'])
-def status_command(message):
-    print_queue(message)
+    keyboard.add(
+        telebot.types.InlineKeyboardButton(
+            'Check status', callback_data='status'
+        )
+    )
+    bot.send_message(message.chat.id, 'Click for your action', reply_markup=keyboard)
+
+
 
 
 @bot.message_handler(commands=['info'])
@@ -43,7 +47,8 @@ def callback(message):
         check_in_queue(message.id , message.from_user.username)
     if data.startswith('check-out-'):
         check_out_queue(message.id, message.from_user.username)
-        
+    if data.startswith('status'):
+        print_queue(message)
     # bot.reply_to(message, message.text)
 
 def check_in_queue(id, username):
