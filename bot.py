@@ -84,6 +84,7 @@ def check_in_queue(message, user):
     else:
         bot.send_message(chat_id, "You are already checked-in")
     bot.answer_callback_query(message.id)
+    bot.register_next_step_handler(message, start_command)
 
 def check_out_queue(message, user):
     username = user.username
@@ -96,6 +97,8 @@ def check_out_queue(message, user):
     else:
         bot.send_message(chat_id, "You are not in the queue")
     bot.answer_callback_query(message.id)
+    bot.register_next_step_handler(message, start_command)
+
         
 def print_queue(message):
     chat_id = message.chat.id
@@ -105,6 +108,8 @@ def print_queue(message):
     result += "\n Total: " + str(len(current_users))
     bot.send_message(chat_id, result)
     bot.answer_callback_query(message.id)
+    bot.register_next_step_handler(message, start_command)
+
 
 
 # Start the bot
