@@ -8,15 +8,6 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 current_users = []
 
-command1 = telebot.types.BotCommand(command='check-in', description='Check in to the queue')
-command2 = telebot.types.BotCommand(command='check-out', description='Check out of the queue')
-command3 = telebot.types.BotCommand(command='status', description='Check status')
-bot.set_my_commands([command1,command2,command3])
-bot.set_chat_menu_button(menu_button=telebot.types.MenuButtonCommands('commands'))
-
-
-bot.send_message("Welcome to here")
-bot.get_chat_menu_button()
 
 
 @bot.message_handler(commands=['help'])
@@ -73,7 +64,11 @@ def callback_query(call):
 
 @bot.message_handler(func=lambda message: True)
 def message_handler(message):
-    bot.reply_to(message, message.text)
+    msg = bot.send_message(message.from_user.id,  """\
+How can I help u?
+""", allow_sending_without_reply=True)
+    bot.register_next_step_handler(msg, start_command)
+    # bot.reply_to(message, message.text)
 
 def check_in_queue(message, user):
     username = user.username
