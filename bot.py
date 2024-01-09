@@ -56,12 +56,13 @@ def check_in_queue(message):
     query_id = message.id
     chat_id = message.chat.id
     if username not in current_users:
+        bot.send_chat_action(chat_id, 'typing')
         current_users.append(username)
         bot.answer_callback_query(query_id)
-        bot.send_message(chat_id=chat_id, text="You are checked-in successfully")
+        bot.send_message(chat_id, "You are checked-in successfully")
     else:
         bot.answer_callback_query(query_id)
-        bot.send_message(chat_id=chat_id, text="You are already checked-in")
+        bot.send_message(chat_id, "You are already checked-in")
 
 def check_out_queue(message):
     username = message.from_user.username
@@ -70,10 +71,11 @@ def check_out_queue(message):
     if username in current_users:
         current_users.remove(username)
         bot.answer_callback_query(id)
-        bot.send_message(chat_id=chat_id, text="You are checked-out successfully")
+        bot.send_chat_action(chat_id, 'typing')
+        bot.send_message(chat_id, "You are checked-out successfully")
     else:
         bot.answer_callback_query(id)
-        bot.send_message(chat_id=chat_id, text="You are not in the queue")
+        bot.send_message(chat_id, "You are not in the queue")
         
 def print_queue(message):
     chat_id = message.chat.id
