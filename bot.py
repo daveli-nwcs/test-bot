@@ -64,7 +64,10 @@ def callback_query(call):
 
 @bot.message_handler(func=lambda message: True)
 def message_handler(message):
-    msg = bot.send_message(message.from_user.id,  """\
+#     msg = bot.send_message(message.from_user.id,  """\
+# How can I help u?
+# """, allow_sending_without_reply=True)
+    msg = bot.send_message(None,  """\
 How can I help u?
 """, allow_sending_without_reply=True)
     bot.register_next_step_handler(msg, start_command)
