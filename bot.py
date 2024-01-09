@@ -48,12 +48,10 @@ def info_command(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     data = call.data
-    logging.info('test', data)
-    logging.info('test2', call.message)
     if data.startswith('check-in-'):
-        check_in_queue(call.message)
+        check_in_queue(call.message, call.from_user)
     if data.startswith('check-out-'):
-        check_out_queue(call.message)
+        check_out_queue(call.message, call.from_user)
     if data.startswith('status'):
         print_queue(call.message)
     # bot.reply_to(message, message.text)
@@ -62,8 +60,8 @@ def callback_query(call):
 def message_handler(message):
     bot.reply_to(message, message.text)
 
-def check_in_queue(message):
-    username = message.from_user.username
+def check_in_queue(message, user):
+    username = user.username
     chat_id = message.chat.id
     bot.send_chat_action(chat_id, 'typing', 3)
     if username not in current_users:
@@ -73,8 +71,8 @@ def check_in_queue(message):
         bot.send_message(chat_id, "You are already checked-in")
     bot.answer_callback_query(message.id)
 
-def check_out_queue(message):
-    username = message.from_user.username
+def check_out_queue(message, user):
+    username = user.username
     chat_id = message.chat.id
     bot.send_chat_action(chat_id, 'typing', 3)
     if username in current_users:
