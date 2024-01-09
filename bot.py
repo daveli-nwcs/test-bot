@@ -46,16 +46,16 @@ def info_command(message):
 
 # Define a message handler
 @bot.callback_query_handler(func=lambda call: True)
-def callback_query(message):
-    data = message.text
+def callback_query(call):
+    data = call.data
     logging.info('test' data)
-    logging.info('test2' message.data)
+    logging.info('test2' call.message)
     if data.startswith('check-in-'):
-        check_in_queue(message)
+        check_in_queue(call.message)
     if data.startswith('check-out-'):
-        check_out_queue(message)
+        check_out_queue(call.message)
     if data.startswith('status'):
-        print_queue(message)
+        print_queue(call.message)
     # bot.reply_to(message, message.text)
 
 @bot.message_handler(func=lambda message: True)
