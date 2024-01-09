@@ -48,8 +48,8 @@ def info_command(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     data = call.data
-    logging.info('test' data)
-    logging.info('test2' call.message)
+    logging.info('test', data)
+    logging.info('test2', call.message)
     if data.startswith('check-in-'):
         check_in_queue(call.message)
     if data.startswith('check-out-'):
