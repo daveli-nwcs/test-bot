@@ -9,7 +9,7 @@ bot = telebot.TeleBot("6963305401:AAHlMPzZ_bDVB0lO_6YpUoj6p9eQnJn3jQEso")
 def send_welcome(message):
     bot.reply_to(message, "Howdy, how are you doing?")
 
-@bot.message_handler(commands=[‘info’])
+@bot.message_handler(commands=['info'])
 def send_info(message):
     bot.reply_to(message, “This is a simple Telegram bot implemented in Python.”)
 
