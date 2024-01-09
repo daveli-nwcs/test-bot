@@ -48,9 +48,9 @@ def info_command(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     data = call.data
-    if data.startswith('check-in-'):
+    if data.startswith('check-in'):
         check_in_queue(call.message, call.from_user)
-    if data.startswith('check-out-'):
+    if data.startswith('check-out'):
         check_out_queue(call.message, call.from_user)
     if data.startswith('status'):
         print_queue(call.message)
@@ -93,5 +93,6 @@ def print_queue(message):
 
 
 # Start the bot
-bot.polling()
+bot.infinity_polling()
+
 
