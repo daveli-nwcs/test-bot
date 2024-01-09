@@ -12,16 +12,12 @@ command1 = telebot.types.BotCommand(command='check-in', description='Check in to
 command2 = telebot.types.BotCommand(command='check-out', description='Check out of the queue')
 command3 = telebot.types.BotCommand(command='status', description='Check status')
 bot.set_my_commands([command1,command2,command3])
-bot.set_chat_menu_button(menu_button=types.MenuButtonCommands('commands'))
+bot.set_chat_menu_button(menu_button=telebot.types.MenuButtonCommands('commands'))
 
-# button1 = telebot.types.KeyboardButton('/check-in')
-# button2 = telebot.types.KeyboardButton('/check-out')
-# button3 = telebot.types.KeyboardButton('/status')
-# button4 = telebot.types.KeyboardButton('/help')
 
-# commands_keyboard = types.ReplyKeyboardMarkup([button1, button2, button3, button4])
+bot.send_message("Welcome to here")
+bot.get_chat_menu_button()
 
-bot.send_message(chatid, "Hi, these are your command options:", reply_markup=commands_keyboard) #you will need to input a valid chatid here.
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
